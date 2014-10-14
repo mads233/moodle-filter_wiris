@@ -51,9 +51,6 @@ if ($CFG->version>=2012120300) { // Moodle 2.4 and upwards.
 if ($CFG->version>=2013111800) {
 	$pluginmanager = core_plugin_manager::instance();
 	if ($plugininfo = $pluginmanager->get_plugin_info('qtype_wq')) {
-		if ($plugininfo->versiondisk < 2014081900 ) {
-			$PAGE->requires->js('/filter/wiris/js/installmessage.js',false);
-		}
 		$plugin->dependencies = array_merge($plugin->dependencies, array('qtype_wq' => 2014081900));
 	}
 } else if ($CFG->version>=2012120300) { // core_plugin_manager not implemented since 2.6
