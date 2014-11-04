@@ -52,7 +52,6 @@ $tiny_ver = $tinyEditor->version;
 
 $wiris_plugin_base = '../../lib/editor/tinymce/plugins/tiny_mce_wiris/tinymce';
 $wiris_plugin_base_string = 'TinyMCE';
-
 if ($CFG->version >= 2014051200) {
 	$editors =  array_flip(explode(',', $CFG->texteditors));
 	if (array_key_exists('atto', $editors) && ($editors['atto'] < $editors['tinymce'])) {
@@ -84,7 +83,7 @@ if ($CFG->version >= 2014051200) {
 </head>
 <body>
 	<h1>Moodle 2.x WIRIS plugin filter test page</h1>
-	<table>
+	<table id="wrs_filter_info_table">
 			<tr>
 				<th>Test</th>
 				<th>Report</th>
@@ -168,14 +167,28 @@ if ($CFG->version >= 2014051200) {
 					}else{
 						$report_text = '';
 					}
-					include '../../lib/editor/tinymce/version.php';
-					$file = $wiris_plugin_base . '/VERSION';
-					if (@fopen($file, 'r')){
-						$content = file($file);
-						$plugin_version = $content[0];
-					}else{
+
+					// Using version.php to check release number
+
+					if (strtolower($wiris_plugin_base_string) == 'tinymce') {
+						include $wiris_plugin_base . '/../version.php';
+					} else {
+						include $wiris_plugin_base . '/version.php';
+					}
+					if (isset($plugin->release)) {
+						$plugin_version = $plugin->release;
+					} else {
 						$plugin_version = "";
 					}
+
+
+					// $file = $wiris_plugin_base . '/VERSION';
+					// if (@fopen($file, 'r')){
+					// 	$content = file($file);
+					// 	$plugin_version = $content[0];
+					// }else{
+					// 	$plugin_version = "";
+					// }
 					if ($filter_version == $plugin_version){
 						$report_text = 'WIRIS plugin filter and WIRIS plugin for '.$wiris_plugin_base_string.' have the same version';
 						$condition = true;
@@ -197,7 +210,8 @@ if ($CFG->version >= 2014051200) {
 		$link = $wiris_plugin_base . '/integration/test.php';
 		echo '<input type="button" value="WIRIS plugin for '.$wiris_plugin_base_string.' tests" onClick="javascript:window.open(\'' . $link . '\');" /><br/>';
 
-		if (!empty(get_config('qtype_wq', 'version'))) {
+		$wqversion = get_config('qtype_wq', 'version');
+		if (!empty($wqversion)) {
 			echo "Click the following button to test if the WIRIS quizzes is correctly installed.<br/>";
 			$link = '../../question/type/wq/info.php';
 			echo '<input type="button" value="WIRIS quizzes tests" onClick="javascript:window.open(\'' . $link . '\');" /><br/>';
@@ -207,4 +221,5 @@ if ($CFG->version >= 2014051200) {
 	</p>
 	<p><br/><span style="font-size:14px; font-weight:normal;">For more information or if you have any doubt contact WIRIS Support: (<a href="mailto:support@wiris.com">support@wiris.com</a>)</span></p>
 </body>
+<script src="info.js"></script>
 </html>

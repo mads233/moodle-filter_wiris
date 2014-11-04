@@ -21,8 +21,8 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once('wirispluginwrapper.php');
 
-$plugin->version = 2014100600;
-$plugin->release = '3.52.2.1139';
+$plugin->version = 2014102100;
+$plugin->release = '3.52.2.1140';
 $plugin->requires =  2011120511;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'filter_wiris';
@@ -33,15 +33,15 @@ if ($CFG->version>=2012120300) { // Moodle 2.4 and upwards.
 	$checkdependencies = !$wirisplugin ? true : (($wirisplugin->version != $plugin->version) ? true : false );
 	if ($checkdependencies) {
 		$editors = array_flip(explode(',', $CFG->texteditors));
-		// If atto and tinymce editors installed choose first for dependencies check.
-		if (array_key_exists('atto', $editors) && array_key_exists('tinymce', $editors)) {
+		// If atto and tinymce editors installed choose first for dependencies check. Atto plugin not supported for 2.6
+		if (array_key_exists('atto', $editors) && array_key_exists('tinymce', $editors)  && $CFG->version>=2014051200) {
 			$plugin->dependencies = ($editors['atto'] < $editors['tinymce']) ?
-									array('atto_wiris' => 2014100600):
-									array('tinymce_tiny_mce_wiris' => 2014100600);
+									array('atto_wiris' => 2014102100):
+									array('tinymce_tiny_mce_wiris' => 2014102100);
 		} else { // Default dependencies atto for Moodle 2.7 and upwards.
 			$plugin->dependencies = ($CFG->version>=2014051200) ?
-									array('atto_wiris' => 2014100600):
-									array('tinymce_tiny_mce_wiris'=>2014100600);
+									array('atto_wiris' => 2014102100):
+									array('tinymce_tiny_mce_wiris'=>2014102100);
 		}
 	}
 }
