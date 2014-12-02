@@ -135,7 +135,7 @@ class com_wiris_plugin_configuration_MoodleConfigurationUpdater implements com_w
             $configuration['wirisproxy_host'] = $CFG->proxyhost;
             $configuration['wirisproxy_port'] = $proxyportenabled ? $CFG->proxyport : null;
             $configuration['wirisproxy_user'] = $proxyuserenabled ? $CFG->proxyuser : null;
-            $configuration['wirisproxy_pass'] = $proxypassenabled ? $CFG->proxypassword : null;
+            $configuration['wirisproxy_password'] = $proxypassenabled ? $CFG->proxypassword : null;
         }
     }
 }
