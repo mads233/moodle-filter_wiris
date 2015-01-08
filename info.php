@@ -159,8 +159,8 @@ if ($CFG->version >= 2014051200) {
 			</tr>
 			<tr>	
 				<?php
+					@include 'wirispluginwrapper.php';
 					$wirisplugin = WIRISpluginWrapper::get_wiris_plugin();
-					@include 'version.php';
 					$test_name = 'Matching WIRIS plugin filter and WIRIS plugin for '.$wiris_plugin_base_string.' versions';
 					if (isset($plugin->release)){
 						$filter_version = $plugin->release;
